@@ -42,6 +42,7 @@ public class DocumentUtilities {
 
 	private static final String XML_SCHEMA_INSTANCE = "http://www.w3.org/2001/XMLSchema-instance";
 	private static final String XML_NAMESPACE = "http://www.w3.org/2000/xmlns/";
+	private static final String DEFAULT_STIX_CONTEX = "org.mitre.stix.stix_1";
 
 	public static JAXBContext stixJaxbContext() {
         // Here is safe lazy initialization trick, revealed in the book:
@@ -54,7 +55,7 @@ public class DocumentUtilities {
 
         private static JAXBContext initDefaultContext(){
             try {
-                return JAXBContext.newInstance("org.mitre.stix.stix_1");
+                return JAXBContext.newInstance(DEFAULT_STIX_CONTEX);
             } catch(JAXBException e) {
                 throw new RuntimeException("Exception initializing default JAXBContext" , e);
             }
@@ -126,10 +127,10 @@ public class DocumentUtilities {
 
 			String packName = jaxbElement.getDeclaredType().getPackage().getName();
 			JAXBContext jaxbContext;
-			if (packName.startsWith("org.mitre")){
+			if (packName.startsWith(DEFAULT_STIX_CONTEX)){
 				jaxbContext = stixJaxbContext();
 			} else {
-				jaxbContext = JAXBContext.newInstance(packName);
+				jaxbContext = Jaxb.get(packName);
 			}
 
 			Marshaller marshaller = jaxbContext.createMarshaller();

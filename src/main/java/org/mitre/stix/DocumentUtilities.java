@@ -126,14 +126,17 @@ public class DocumentUtilities {
 					.newDocument();
 
 			String packName = jaxbElement.getDeclaredType().getPackage().getName();
+			/*
 			JAXBContext jaxbContext;
 			if (packName.startsWith(DEFAULT_STIX_CONTEX)){
 				jaxbContext = stixJaxbContext();
 			} else {
 				jaxbContext = Jaxb.get(packName);
 			}
-
 			Marshaller marshaller = jaxbContext.createMarshaller();
+			*/
+
+			Marshaller marshaller = Jaxb.get(packName).getMarshaller();
 
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 					prettyPrint);

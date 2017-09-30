@@ -56,6 +56,7 @@ import org.mitre.stix.CreatePackageInfoTask
 import org.mitre.stix.GeneratedSourceTransformationTask
 import org.mitre.stix.CleanSchemaTask
 import org.mitre.stix.CalcChecksumTask
+import org.mitre.stix.AddAISMarkingSupportTask
 
 apply plugin: "java"
 apply plugin: "groovy"
@@ -73,7 +74,11 @@ task retrieveSchemas(type: RetrieveSchemasTask, dependsOn: clean) {
 	schemaVersion = project.schemaVersion
 }
 
-task createPrefixNamespaceBindings(type: PrefixNamespaceBindingsTask, dependsOn: retrieveSchemas) {
+task addAISMarkingSupport(type : AddAISMarkingSupportTask, dependsOn: retrieveSchemas) {
+	schemaVersion = project.schemaVersion
+}
+
+task createPrefixNamespaceBindings(type: PrefixNamespaceBindingsTask, dependsOn: addAISMarkingSupport) {
 	schemaVersion = project.schemaVersion
 }
 

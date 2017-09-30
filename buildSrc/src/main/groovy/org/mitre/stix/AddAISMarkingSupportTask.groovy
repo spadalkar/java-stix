@@ -14,23 +14,22 @@ import org.mitre.stix.Checksum
 import org.apache.tools.ant.taskdefs.condition.Os
 
 /**
- * Gradle Task used to attempt to automatically retrieve the schemas
- * 
+ * Gradle Task for adding AIS_Bundle_Marking_1.1.1_v1.0 to TLP extension
  */
 class AddAISMarkingSupportTask extends DefaultTask {
 
-	@Input String schemaVersion
-	
-	AddAISMarkingSupportTask() {
-		description "Add support for AIS:AISMarkingStructure schemas."
-	}
-	
-	@TaskAction
-	def start() {
+    @Input String schemaVersion
+
+    AddAISMarkingSupportTask() {
+        description "Add support for AIS:AISMarkingStructure schemas."
+    }
+
+    @TaskAction
+    def start() {
 
         def src_file_path = project.file("AIS_Bundle_Marking_1.1.1_v1.0.xsd")
         def dst_file_path = project.file("src/main/resources/schemas/v${schemaVersion}/extensions/marking/AIS_Bundle_Marking_1.1.1_v1.0.xsd")
-        
+
         if (!src_file_path.exists()) {
             println "    ${src_file_path.getPath()} is not missing...continue."
             return true
@@ -40,7 +39,8 @@ class AddAISMarkingSupportTask extends DefaultTask {
             println "    ${dst_file_path.getPath()} has already been copied."
             return true
         }
-		ant.copy(tofile: dst_file_path.getPath(), file: src_file_path.getPath(), overwrite:true)
-		println "    Add support for ${src_file_path.getPath()}"
-	}
+
+        ant.copy(tofile: dst_file_path.getPath(), file: src_file_path.getPath(), overwrite:true)
+        println "    Add support for ${src_file_path.getPath()}"
+    }
 }
